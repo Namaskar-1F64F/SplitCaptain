@@ -1,4 +1,4 @@
-<!--<script>
+<script>
   import { firebase } from "../firebase.js";
   import { voyage, selected, undo } from "../store";
   import { Doc, Collection } from "sveltefire";
@@ -43,12 +43,16 @@
       return acc;
     }, {});
   };
-</script><Doc path={$voyage} let:data={voyageData}>
+</script>
+
+<Doc path={$voyage} let:data={voyageData}>
   <Collection
     path={`/voyage/${$voyage.id}/provision`}
     let:data={provisionsData}
     let:ref>
-    <div class="grid grid-cols-1 gap-2 xs:grid-cols-2 sm:grid-cols-4 lg:grid-cols-6">
+    <ProvisionInput {ref} />
+    <div
+      class="grid grid-cols-1 gap-2 xs:grid-cols-2 sm:grid-cols-4 lg:grid-cols-6">
       {#each provisionsData as provision (provision)}
         <Provision
           {provision}
@@ -56,10 +60,7 @@
           on:remove={() => handleRemove(provision, ref)} />
       {/each}
     </div>
-    <div>
-      <ProvisionInput {ref} />
-    </div>
-    <div>
+    <!-- <div>
       People
       {#each Object.entries(sumPeople(provisionsData)) as [name, total]}
         <div>{name}: ${total}</div>
@@ -67,6 +68,6 @@
     </div>
     <div>
       Total ${sumProvisions(provisionsData) + parseInt(voyageData.tip) + parseInt(voyageData.tax) + parseInt(voyageData.fees)}
-    </div>
+    </div> -->
   </Collection>
-</Doc> -->
+</Doc>

@@ -14,10 +14,7 @@
 
 <style>
   .open {
-    transform: translateX(-75%);
-  }
-  svg {
-    margin-right: -185px;
+    transform: translateX(0%);
   }
 </style>
 
@@ -36,7 +33,7 @@
     <svg
       class:open
       on:mouseenter={handleMouseEnter}
-      class={`absolute right-0 translate-x-8 transition-all select-none h-64 cursor-pointer`}
+      class={`bottom-0 right-0 transition-all select-none h-64 cursor-pointer`}
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"

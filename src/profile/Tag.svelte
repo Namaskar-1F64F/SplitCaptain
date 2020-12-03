@@ -4,6 +4,7 @@
 
 <svg
   height="100%"
+  width="100%"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   viewBox="0 0 334.52 632.48">
@@ -113,6 +114,7 @@
     y="430"
     dominant-baseline="middle"
     text-anchor="middle"
+    fomt-family="chippewa-falls"
     font-size="2.5em">
     {text}
   </text>

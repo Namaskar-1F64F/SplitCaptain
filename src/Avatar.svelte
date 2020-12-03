@@ -19,7 +19,7 @@
   {#if isRemovable}
     <span
       on:click={handleRemove}
-      class="absolute top-0 right-0 block h-4 w-4 rounded-full ring-2 ring-white bg-red-400 cursor-pointer" />
+      class="top-0 right-0 block h-4 w-4 rounded-full ring-2 ring-white bg-red-400 cursor-pointer" />
   {/if}
   <Ship {shipType} {theme} />
 </span>

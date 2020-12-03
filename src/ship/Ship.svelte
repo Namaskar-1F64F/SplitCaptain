@@ -1,22 +1,19 @@
 <script>
-  import { shipPaletteMap, shipMap } from "./ships.js";
+  import { stringify } from "querystring";
 
-  export let theme = null;
+  import Windy from "./Windy.svelte";
+  import Cruiser from "./Cruiser.svelte";
+  import Selfie from "./Selfie.svelte";
+  import Whale from "./Whale.svelte";
+  import Carrier from "./Carrier.svelte";
+  import { shipPaletteMap, shipTypes, shipMap } from "./ships.js";
+
+  export let theme = "Passion";
   export let shipType = "Selfie";
 
-  let colors = shipPaletteMap.Passion;
-  if (shipType && typeof shipType == "string") {
-    // there's the first part which is the ship type. I'm hoping for a sailboat!!
-    if (shipMap[shipType]) {
-      // all aboard, we found our ship, now lets get our theme
-      if (shipPaletteMap[theme]) {
-        // awesome, got THE THEME, let's get the deckhands painting this thing immediately
-        colors = shipPaletteMap[theme];
-      }
-    }
-  }
+  $: colors = shipPaletteMap[theme] || shipPaletteMap.Passion;
 
-  const Boat = shipMap[shipType];
+  $: Boat = shipMap[shipType];
 </script>
 
-<Boat on:click {colors} />
+<svelte:component this={Boat} on:click {colors} />
