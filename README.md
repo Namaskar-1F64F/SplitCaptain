@@ -15,7 +15,7 @@ Sure, setup is just `yarn start`, and enjoy yourself while the non-snowpack usin
 This will be updated as development goes on. So far, I've got:
 
 - voyage (room) support, with any number of crew-people joining, though to be honest I haven't tested it with more than a few so far. 
-- real-time updating of shared objects such as provisions (receipt line items) and name tags (sser information). 
+- real-time updating of shared objects such as provisions (receipt line items) and name tags (user information). 
 - a pretty cool ship (avatar) selection process
 - some semi-complete assets
 
