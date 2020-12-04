@@ -37,8 +37,12 @@
     font-size: 20px;
     line-height: 23px;
   }
+  .logo {
+    margin-top: -20px;
+    pointer-events: none;
+  }
   .focused {
-    transform: translateY(-5px);
+    transform: translateY(18px) translateX(4px);
   }
 </style>
 
@@ -75,8 +79,10 @@
             on:focus={() => {
               focused = true;
             }}
-            on:blur={() => {
-              focused = false;
+            on:blur={({ target: { value } }) => {
+              if (!value) {
+                focused = false;
+              }
             }}
             autocorrect="off"
             autocomplete="off"
@@ -87,7 +93,9 @@
               ref.update({ venmo: value });
             }} />
         </div>
-        <div class:focused class="transition-all w-full">
+        <div
+          class:focused={focused || data?.venmo}
+          class="logo transition-all w-full">
           <Venmo />
         </div>
       </div>

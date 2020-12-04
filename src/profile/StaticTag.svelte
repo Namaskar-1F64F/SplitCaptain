@@ -1,8 +1,17 @@
 <script>
-  export let text = '';
+  export let selected = false;
+  export let text = "";
 </script>
 
+<style>
+  .selected {
+    transform: translateY(1.5rem);
+  }
+</style>
+
 <svg
+  class:selected
+  class="transition-all"
   height="100%"
   width="100%"
   xmlns="http://www.w3.org/2000/svg"

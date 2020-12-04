@@ -4,7 +4,7 @@
 </script>
 
 <Doc path={$voyage} let:data let:ref>
-  {#each ['tip', 'tax', 'fees'] as name}
+  {#each ['tip', 'tax', 'fees'] as name (name)}
     <label for={name}>{name}</label>
     <input
       id={name}

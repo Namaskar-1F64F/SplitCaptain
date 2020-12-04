@@ -3,6 +3,7 @@ import "firebase/firestore";
 import "firebase/auth";
 import "firebase/performance";
 import "firebase/analytics";
+import { getShipName } from "./ship/ships";
 
 if (!firebase.apps.length)
   firebase.initializeApp({
@@ -31,12 +32,14 @@ if (queryId) {
 voyage.set(voyageRef);
 const crewmateRef = voyageRef.collection("crewmate");
 auth.signInAnonymously().then(({ user: { uid } }) => {
-  // db.doc(`mariner/${uid}`)
-  //   .set(
-  //     { voyeages: firebase.firestore.FieldValue.arrayUnion(voyageRef.id) },
-  //     { merge: true }
-  //   )
-  //   .then(() => {
+  db.doc(`mariner/${uid}`)
+    .get()
+    .then((snapshot) => {
+      if (!snapshot.exists) {
+        snapshot.ref.set({ name: getShipName() });
+      }
+    })
+    .then(() => {
       voyageRef.set({ date: new Date() }, { merge: true });
       db.doc(`mariner/${uid}`)
         .get()
@@ -44,4 +47,4 @@ auth.signInAnonymously().then(({ user: { uid } }) => {
           crewmateRef.doc(uid).set({ ...mariner.data(), uid });
         });
     });
-// });
+});

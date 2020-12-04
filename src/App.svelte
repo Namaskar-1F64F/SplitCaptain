@@ -7,6 +7,7 @@
   import Provisions from "./provision/Provisions.svelte";
   import Undo from "./store/Undo.svelte";
   import Announcement from "./store/Announcement.svelte";
+  import Badge from "./Badge.svelte";
 </script>
 
 <svelte:head>
@@ -23,18 +24,24 @@
 <FirebaseApp {firebase}>
   <User let:user={mariner}>
     <div class="body">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <span class="text-4xl">Crew</span>
-        <AvatarSelect uid={mariner.uid} />
-        <span class="text-4xl">Provisions</span>
-        <Provisions />
-        <span class="text-4xl">Name Tag</span>
-        <Profile uid={mariner.uid} />
-        <span class="text-4xl">Ticket</span>
+      <div
+        class="text-center container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col align-center">
+        <span class="text-4xl">Name Your Ship</span>
+        <div class="p-10 content-center w-full">
+          <Profile uid={mariner.uid} />
+        </div>
+        <span class="text-4xl">Invite Your Crew</span>
         <ShareUrl />
+        <span class="text-4xl">Welcome Your Crew</span>
+        <AvatarSelect uid={mariner.uid} />
+        <span class="text-4xl">Add Provisions</span>
+        <div class="p-10 mb-12 content-center">
+          <Provisions />
+        </div>
       </div>
       <Undo />
       <Announcement />
+      <Badge />
     </div>
   </User>
 </FirebaseApp>

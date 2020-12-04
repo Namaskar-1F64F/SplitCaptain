@@ -21,17 +21,24 @@
   label {
     cursor: pointer;
   }
+  .translate {
+    transform: translateY(-2rem);
+  }
 </style>
 
 <Collection path={`/voyage/${$voyage.id}/crewmate`} let:data let:ref>
-  {#each data as crewmate}
-    <label>
-      <StaticProfile
-        isRemovable={uid != crewmate.uid}
-        {crewmate}
-        selected={crewmate == $selected}
-        on:remove={() => handleRemove(crewmate, ref)} />
-      <input type="radio" value={crewmate} bind:group={$selected} />
-    </label>
-  {/each}
+  <div class="border-black border-t-2 flex justify-evenly overflow-hidden">
+    {#each data as crewmate (crewmate)}
+      <div class="translate">
+        <label>
+          <StaticProfile
+            isRemovable={uid != crewmate.uid}
+            {crewmate}
+            selected={crewmate == $selected}
+            on:remove={() => handleRemove(crewmate, ref)} />
+          <input type="radio" value={crewmate} bind:group={$selected} />
+        </label>
+      </div>
+    {/each}
+  </div>
 </Collection>

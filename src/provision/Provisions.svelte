@@ -3,9 +3,6 @@
   import { voyage, selected, undo } from "../store";
   import { Doc, Collection } from "sveltefire";
   import Provision from "./Provision.svelte";
-  import ProvisionInput from "./ProvisionInput.svelte";
-  import Fees from "../Fees.svelte";
-
   const handleSelect = ({ id }, provisionRef, remove) => {
     if (!$selected?.name) return;
     provisionRef.doc(id).update({
@@ -13,6 +10,24 @@
         ? firebase.firestore.FieldValue.arrayRemove($selected.name)
         : firebase.firestore.FieldValue.arrayUnion($selected.name),
     });
+  };
+
+  const handleAdd = (provision, provisionRef) => {
+    const { price, description } = provision;
+    provisionRef.add({
+      price,
+      description,
+    });
+    provision = null;
+  };
+
+  const handleEdit = (provision, provisionRef, {id}) => {
+    const { price, description } = provision;
+    provisionRef.doc(id).update({
+      price,
+      description,
+    });
+    provision = null;
   };
 
   const handleRemove = ({ id, description, price }, provisionRef) => {
@@ -43,6 +58,7 @@
       return acc;
     }, {});
   };
+  $: emptyProvision = {};
 </script>
 
 <Doc path={$voyage} let:data={voyageData}>
@@ -50,24 +66,20 @@
     path={`/voyage/${$voyage.id}/provision`}
     let:data={provisionsData}
     let:ref>
-    <ProvisionInput {ref} />
     <div
-      class="grid grid-cols-1 gap-2 xs:grid-cols-2 sm:grid-cols-4 lg:grid-cols-6">
+      class="grid grid-cols-1 gap-64 xs:grid-cols-2 sm:grid-cols-4 lg:grid-cols-6">
       {#each provisionsData as provision (provision)}
         <Provision
           {provision}
+          on:edit={({ detail }) => handleEdit(detail, ref, provision.ref)}
           on:select={({ detail: { remove } }) => handleSelect(provision, ref, remove)}
           on:remove={() => handleRemove(provision, ref)} />
       {/each}
+
+      <Provision
+        on:add={({ detail }) => handleAdd(detail, ref)}
+        on:select={({ detail: { remove } }) => handleSelect(emptyProvision, ref, remove)}
+        on:remove={() => handleRemove(emptyProvision, ref)} />
     </div>
-    <!-- <div>
-      People
-      {#each Object.entries(sumPeople(provisionsData)) as [name, total]}
-        <div>{name}: ${total}</div>
-      {/each}
-    </div>
-    <div>
-      Total ${sumProvisions(provisionsData) + parseInt(voyageData.tip) + parseInt(voyageData.tax) + parseInt(voyageData.fees)}
-    </div> -->
   </Collection>
 </Doc>
