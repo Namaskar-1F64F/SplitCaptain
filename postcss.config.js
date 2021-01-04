@@ -1,11 +1,37 @@
-const tailwind = require("tailwindcss");
-const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
+const postcssColorMod = require("postcss-color-mod-function");
 const postcssPresetEnv = require("postcss-preset-env");
+const postcssImport = require("postcss-import");
+const postcssUrl = require("postcss-url");
+const purgeCss = require("@fullhuman/postcss-purgecss");
+const tailwindCss = require("tailwindcss");
 
-const plugins =
-  process.env.NODE_ENV === "production"
-    ? [tailwind, autoprefixer, cssnano, postcssPresetEnv]
-    : [tailwind, autoprefixer, postcssPresetEnv];
+const production = !process.env.ROLLUP_WATCH;
 
-module.exports = { plugins };
+module.exports = {
+  plugins: [
+    postcssImport(),
+    postcssUrl(),
+    tailwindCss(),
+    postcssPresetEnv({
+      stage: 0,
+      features: {
+        'focus-within-pseudo-class': false
+      },
+      autoprefixer: {
+        grid: false,
+        
+      },
+    }),
+    postcssColorMod(),
+    cssnano({
+      autoprefixer: false,
+      preset: ["default"],
+    }),
+    production &&
+      purgeCss({
+        content: ["./**/*.html", "./**/*.svelte"],
+        defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
+      }),
+  ],
+};
