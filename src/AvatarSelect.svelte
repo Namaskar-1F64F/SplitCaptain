@@ -34,7 +34,7 @@
           <StaticProfile
             isRemovable={uid != crewmate.uid}
             {crewmate}
-            selected={crewmate == $selected}
+            selected={crewmate === $selected}
             on:remove={() => handleRemove(crewmate, ref)} />
           <input type="radio" value={crewmate} bind:group={$selected} />
         </label>
