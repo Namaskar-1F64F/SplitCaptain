@@ -8,8 +8,8 @@
   const DEFAULT_PRICE_TEXT = "enter price";
   const DEFAULT_DESCRIPTION_TEXT = "enter name";
   export let provision = {
-    description: DEFAULT_DESCRIPTION_TEXT,
-    price: DEFAULT_PRICE_TEXT,
+    description: "",
+    price: "",
     crewmate: [],
     id: null,
   };
@@ -79,9 +79,6 @@
     ["top-full", "-mt-1"],
   ];
 </script>
-
-<style>
-</style>
 
 <div class="relative h-32 w-32">
   <svg
@@ -165,14 +162,16 @@
   {/if}
   <div
     contenteditable
+    placeholder={DEFAULT_PRICE_TEXT}
     bind:this={priceInput}
     on:blur={handleBlur}
     class="transform -translate-y-1/2 text-center absolute w-full top-1/2 border-4 border-gray-900 bg-green-500 text-white center-self text-xl font-medium bg-orange-500 rounded-lg">
-    {price.search(/\w/) === -1 ? '$' + price : price}
+    {price}
   </div>
   <div
     bind:this={descriptionInput}
     contenteditable
+    placeholder={DEFAULT_DESCRIPTION_TEXT}
     on:blur={handleBlur}
     class="text-center absolute bottom-0 w-full text-md font-medium text-black truncate">
     {description}

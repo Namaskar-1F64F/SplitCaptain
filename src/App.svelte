@@ -10,6 +10,13 @@
   import Badge from "./Badge.svelte";
 </script>
 
+<style>
+  :global([contenteditable][placeholder]:empty::before) {
+    content: attr(placeholder);
+    color: gray;
+  }
+</style>
+
 <svelte:head>
   <style>
     @import url("https://use.typekit.net/zkf6wmv.css");
@@ -19,7 +26,6 @@
     }
   </style>
 </svelte:head>
-
 <svelte:body />
 <FirebaseApp {firebase}>
   <User let:user={mariner}>
