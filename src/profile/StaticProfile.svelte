@@ -2,7 +2,7 @@
   import Ship from "../ship/Ship.svelte";
   import StaticTag from "./StaticTag.svelte";
   export let crewmate;
-  export let selected;
+  export let selected = false;
   const { name, theme, shipType } = crewmate;
 </script>
 

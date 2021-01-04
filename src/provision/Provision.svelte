@@ -35,7 +35,7 @@
   const handleSelect = () => {
     if (id) {
       const remove =
-        $selected != null && crewmate && crewmate.includes($selected?.name);
+        $selected != null && crewmate && crewmate.includes($selected?.uid);
       dispatch("select", { remove });
     }
   };
