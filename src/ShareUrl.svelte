@@ -24,7 +24,7 @@
     on:click={(event) => {
       const url = `/?i=${$voyage.id}`;
       if (navigator.share) {
-        navigator.share({ title: `Join my voyage!`, url, text:'Come aboard!' }).catch(console.error);
+        navigator.share({ title: `Join my voyage!`, url }).catch(console.error);
       } else {
         copy(`${window.location.host}${url}`);
       }

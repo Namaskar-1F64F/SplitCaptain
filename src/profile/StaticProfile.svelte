@@ -6,7 +6,6 @@
   const { name, theme, shipType } = crewmate;
 </script>
 
-
 <div class="w-32" class:selected>
   <StaticTag {selected} text={name}>
     <Ship {theme} {shipType} />

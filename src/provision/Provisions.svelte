@@ -4,11 +4,11 @@
   import { Doc, Collection } from "sveltefire";
   import Provision from "./Provision.svelte";
   const handleSelect = ({ id }, provisionRef, remove) => {
-    if (!$selected?.name) return;
+    if (!$selected?.uid) return;
     provisionRef.doc(id).update({
       crewmate: remove
-        ? firebase.firestore.FieldValue.arrayRemove($selected.name)
-        : firebase.firestore.FieldValue.arrayUnion($selected.name),
+        ? firebase.firestore.FieldValue.arrayRemove($selected.uid)
+        : firebase.firestore.FieldValue.arrayUnion($selected.uid),
     });
   };
 
