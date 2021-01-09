@@ -1,17 +1,20 @@
+import { init, getLocaleFromNavigator } from "svelte-i18n";
 import App from "./App.svelte";
-import "./main.css";
+import "./Tailwind.svelte";
+import "./i18n";
 
-var app = new App({
-  target: document.body,
+const fallbackLocale = "en-US";
+const navigatorLocale = getLocaleFromNavigator();
+
+init({
+  fallbackLocale,
+  initialLocale: ["en-US"].includes(navigatorLocale)
+    ? navigatorLocale
+    : fallbackLocale,
+});
+
+const app = new App({
+  target: document.body
 });
 
 export default app;
-
-// Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
-// Learn more: https://www.snowpack.dev/#hot-module-replacement
-if (import.meta.hot) {
-  import.meta.hot.accept();
-  import.meta.hot.dispose(() => {
-    app.$destroy();
-  });
-}
