@@ -114,7 +114,7 @@
     y="430"
     dominant-baseline="middle"
     text-anchor="middle"
-    fomt-family="chippewa-falls"
+    fomt-family="Chippewa Falls"
     font-size="2.5em">
     {text}
   </text>

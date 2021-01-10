@@ -19,10 +19,14 @@
 
 <svelte:head>
   <style>
-    @import url("https://use.typekit.net/zkf6wmv.css");
+    @font-face {
+      font-family: "Chippewa Falls";
+      src: url("/fonts/Chippewa-Falls-Regular.woff2") format("woff2"),
+        url("/fonts/Chippewa-Falls-Regular.woff") format("woff");
+    }
     .body {
       background-color: #24aae1;
-      font-family: "chippewa-falls";
+      font-family: "Chippewa Falls";
     }
   </style>
 </svelte:head>

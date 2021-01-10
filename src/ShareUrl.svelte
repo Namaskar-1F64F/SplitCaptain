@@ -2,6 +2,7 @@
   import { voyage } from "./store";
   import { slide } from "svelte/transition";
   import copy from "copy-text-to-clipboard";
+  import { t } from 'svelte-i18n';
 
   let open = false;
   const handleMouseEnter = () => {
@@ -126,7 +127,9 @@
       <rect x="320.652" y="315.959" width="15.642" height="39.625" />
       <rect x="344.635" y="315.959" width="15.642" height="39.625" />
       <g>
-        <text x="40.147" y="247.367" font-size="55">Share Ticket</text>
+        <text x="40.147" y="247.367" font-size="55">
+          {$t('ShareUrl.Title')}
+        </text>
       </g>
 
       <rect x="40.147" y="260.692" width="104.277" height="15.642" />
