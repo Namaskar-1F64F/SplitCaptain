@@ -2,7 +2,7 @@
   import { voyage } from "./store";
   import { slide } from "svelte/transition";
   import copy from "copy-text-to-clipboard";
-  import { t } from 'svelte-i18n';
+  import { t } from "svelte-i18n";
 
   let open = false;
   const handleMouseEnter = () => {

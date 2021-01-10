@@ -1,0 +1,29 @@
+{
+  "App": {},
+  "Avatar": {},
+  "AvatarSelect": {},
+  "Badge": {},
+  "Fees": {},
+  "ShareUrl": {
+    "Title": "Share Ticket"
+  },
+  "Tailwind": {},
+  "Translate": {},
+  "Profile": {},
+  "StaticProfile": {},
+  "StaticTag": {},
+  "Tag": {},
+  "Venmo": {},
+  "Provision": {},
+  "ProvisionInput": {},
+  "Provisions": {},
+  "Carrier": {},
+  "Cruiser": {},
+  "Selfie": {},
+  "Ship": {},
+  "ShipSelect": {},
+  "Whale": {},
+  "Windy": {},
+  "Announcement": {},
+  "Undo": {}
+}
