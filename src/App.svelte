@@ -10,13 +10,6 @@
   import Badge from "./Badge.svelte";
 </script>
 
-<style>
-  :global([contenteditable][placeholder]:empty::before) {
-    content: attr(placeholder);
-    color: gray;
-  }
-</style>
-
 <svelte:head>
   <style>
     @font-face {
@@ -24,7 +17,9 @@
       src: url("/fonts/Chippewa-Falls-Regular.woff2") format("woff2"),
         url("/fonts/Chippewa-Falls-Regular.woff") format("woff");
     }
-    .body {
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
       background-color: #24aae1;
       font-family: "Chippewa Falls";
     }
@@ -33,25 +28,23 @@
 <svelte:body />
 <FirebaseApp {firebase}>
   <User let:user={mariner}>
-    <div class="body">
-      <div
-        class="text-center container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col align-center">
-        <span class="text-4xl">Name Your Ship</span>
-        <div class="p-10 content-center w-full">
-          <Profile uid={mariner.uid} />
-        </div>
-        <span class="text-4xl">Invite Your Crew</span>
-        <ShareUrl />
-        <span class="text-4xl">Welcome Your Crew</span>
-        <AvatarSelect uid={mariner.uid} />
-        <span class="text-4xl">Add Provisions</span>
-        <div class="p-10 mb-12 content-center">
-          <Provisions />
-        </div>
+    <div
+      class="text-center container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col align-center">
+      <span class="text-4xl">Name Your Ship</span>
+      <div class="p-10 content-center w-full">
+        <Profile uid={mariner.uid} />
       </div>
-      <Undo />
-      <Announcement />
-      <Badge />
+      <span class="text-4xl">Invite Your Crew</span>
+      <ShareUrl />
+      <span class="text-4xl">Welcome Your Crew</span>
+      <AvatarSelect uid={mariner.uid} />
+      <span class="text-4xl">Add Provisions</span>
+      <div class="p-10 mb-12 content-center">
+        <Provisions />
+      </div>
     </div>
+    <Undo />
+    <Announcement />
+    <Badge />
   </User>
 </FirebaseApp>
