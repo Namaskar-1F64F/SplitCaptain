@@ -5,7 +5,7 @@
   "description": "Navigate your vessel through choppy seas alongside your crew on an exciting voyage of splitting payments.",
   "theme_color": "#24aae1",
   "background_color": "#24aae1",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
