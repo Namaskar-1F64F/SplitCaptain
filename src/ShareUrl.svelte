@@ -23,7 +23,7 @@
   <div
     in:slide
     on:click={(event) => {
-      const url = `/?i=${$voyage.id}&e=${$excursion.id}`;
+      const url = `/?v=${$voyage.id}&e=${$excursion.id}`;
       if (navigator.share) {
         navigator.share({ title: `Join my voyage!`, url }).catch(console.error);
       } else {

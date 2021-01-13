@@ -22,22 +22,25 @@ export const db = firebase.firestore();
 export const auth = firebase.auth();
 
 import { voyage, excursion } from "./store";
-const queryId = window.location.search.split("i=")?.[1];
+
+let params = (new URL(window.location)).searchParams;
+const excursionId = params.get("e");
+const voyageId = params.get("v");
 let voyageRef;
-if (queryId) {
-  voyageRef = db.doc(`/voyages/${queryId}`);
+if (excursionId) {
+  voyageRef = db.doc(`/voyages/${voyageId}`);
 } else {
   voyageRef = db.collection("voyages").doc();
 }
 voyage.set(voyageRef);
 
 
-const excursionId = window.location.search.split("e=")?.[1];
+
 let excursionRef
 
 
-if (excursionId && queryId) {
-  excursionRef = db.doc(`/voyages/${queryId}/excursions/${excursionId}`);
+if (voyageId && excursionId) {
+  excursionRef = db.doc(`/voyages/${voyageId}/excursions/${excursionId}`);
 } else {
   excursionRef = voyageRef.collection('excursions').doc();
 }
