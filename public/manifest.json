@@ -1,9 +1,11 @@
 {
   "name": "Split Captain",
   "short_name": "Split Captain",
-  "theme_color": "#519fe0",
-  "background_color": "#333",
-  "display": "browser",
+  "app_name": "Split Captain",
+  "description": "Navigate your vessel through choppy seas alongside your crew on an exciting voyage of splitting payments.",
+  "theme_color": "#24aae1",
+  "background_color": "#24aae1",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
@@ -47,6 +49,12 @@
       "src": "/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/maskable-icon",
+      "sizes": "800x800",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
