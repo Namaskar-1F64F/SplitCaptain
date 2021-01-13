@@ -25,14 +25,14 @@ import { voyage } from "./store";
 const queryId = window.location.search.split("i=")?.[1];
 let voyageRef;
 if (queryId) {
-  voyageRef = db.doc(`/voyage/${queryId}`);
+  voyageRef = db.doc(`/voyages/${queryId}`);
 } else {
-  voyageRef = db.collection("voyage").doc();
+  voyageRef = db.collection("voyages").doc();
 }
 voyage.set(voyageRef);
-const crewmateRef = voyageRef.collection("crewmate");
+const crewmateRef = voyageRef.collection("crewmates");
 auth.signInAnonymously().then(({ user: { uid } }) => {
-  db.doc(`mariner/${uid}`)
+  db.doc(`mariners/${uid}`)
     .get()
     .then((snapshot) => {
       if (!snapshot.exists) {
@@ -41,7 +41,7 @@ auth.signInAnonymously().then(({ user: { uid } }) => {
     })
     .then(() => {
       voyageRef.set({ date: new Date() }, { merge: true });
-      db.doc(`mariner/${uid}`)
+      db.doc(`mariners/${uid}`)
         .get()
         .then((mariner) => {
           crewmateRef.doc(uid).set({ ...mariner.data(), uid });

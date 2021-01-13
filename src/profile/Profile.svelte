@@ -47,7 +47,7 @@
 </style>
 
 <div class="top-0 right-0 flex">
-  <Doc path={`/mariner/${uid}`} let:data let:ref>
+  <Doc path={`/mariners/${uid}`} let:data let:ref>
     <div class="relative w-36">
       <Tag>
         <Ship
@@ -55,7 +55,7 @@
             $announce = { component: ShipSelect, onSelect: ({ detail: { shipType, theme } }) => {
                 ref.update({ theme, shipType });
                 $voyage
-                  .collection('crewmate')
+                  .collection('crewmates')
                   .doc(uid)
                   .update({ shipType, theme });
               } };
@@ -69,7 +69,7 @@
         class="name outline-none"
         value={data?.name}
         on:change={({ target: { value } }) => {
-          $voyage.collection('crewmate').doc(uid).update({ name: value });
+          $voyage.collection('crewmates').doc(uid).update({ name: value });
           ref.update({ name: value });
         }} />
       <div class="providers">
@@ -89,7 +89,7 @@
             class="provider appearance-none text-sm"
             placeholder={data?.venmo}
             on:change={({ target: { value } }) => {
-              $voyage.collection('crewmate').doc(uid).update({ venmo: value });
+              $voyage.collection('crewmates').doc(uid).update({ venmo: value });
               ref.update({ venmo: value });
             }} />
         </div>
