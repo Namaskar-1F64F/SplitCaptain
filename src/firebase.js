@@ -21,7 +21,7 @@ export { firebase };
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-import { voyage } from "./store";
+import { voyage, excursion } from "./store";
 const queryId = window.location.search.split("i=")?.[1];
 let voyageRef;
 if (queryId) {
@@ -30,6 +30,19 @@ if (queryId) {
   voyageRef = db.collection("voyages").doc();
 }
 voyage.set(voyageRef);
+
+
+const excursionId = window.location.search.split("e=")?.[1];
+let excursionRef
+
+
+if (excursionId && queryId) {
+  excursionRef = db.doc(`/voyages/${queryId}/excursions/${excursionId}`);
+} else {
+  excursionRef = voyageRef.collection('excursions').doc();
+}
+excursion.set(excursionRef);
+
 const crewmateRef = voyageRef.collection("crewmates");
 auth.signInAnonymously().then(({ user: { uid } }) => {
   db.doc(`mariners/${uid}`)
