@@ -30,7 +30,10 @@ let voyageRef;
 if (excursionId) {
   voyageRef = db.doc(`/voyages/${voyageId}`);
 } else {
-  voyageRef = db.collection("voyages").doc();
+  // TODO unhard code this. This is set so that it always users this voyage ID
+  // It will be useful for testing, and we can consider the below ID our mexico voyage
+    voyageRef = db.collection("voyages").doc('n3jonjH3ldmsK7S4vANf');
+  // voyageRef = db.collection("voyages").doc();
 }
 voyage.set(voyageRef);
 
