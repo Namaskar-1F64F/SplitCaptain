@@ -26,7 +26,7 @@
   }
 </style>
 
-<Collection path={`/voyage/${$voyage.id}/crewmate`} let:data let:ref>
+<Collection path={`/voyages/${$voyage.id}/crewmates`} let:data let:ref>
   <div class="border-black border-t-2 flex justify-evenly overflow-hidden">
     {#each data as crewmate (crewmate)}
       <div class="translate">

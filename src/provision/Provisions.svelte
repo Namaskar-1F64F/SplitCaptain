@@ -63,7 +63,7 @@
 
 <Doc path={$voyage} let:data={voyageData}>
   <Collection
-    path={`/voyage/${$voyage.id}/provision`}
+    path={`/voyages/${$voyage.id}/provisions`}
     let:data={provisionsData}
     let:ref>
     <div
