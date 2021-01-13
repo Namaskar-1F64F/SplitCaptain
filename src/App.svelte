@@ -51,10 +51,7 @@
         <ShareUrl />
         <span class="text-4xl">Welcome Your Crew</span>
         <AvatarSelect uid={mariner.uid} />
-        <span class="text-4xl">Add Provisions</span>
-        <div class="p-10 mb-12 content-center">
-          <Provisions />
-        </div>
+        
       </div>
       <Undo />
       <Announcement />
