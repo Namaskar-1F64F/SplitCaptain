@@ -6,7 +6,7 @@
   import Ship from "../ship/Ship.svelte";
   import Venmo from "./Venmo.svelte";
 
-  export let uid;
+  export let id;
   let focused;
 </script>
 
@@ -47,7 +47,7 @@
 </style>
 
 <div class="top-0 right-0 flex">
-  <Doc path={`/mariners/${uid}`} let:data let:ref>
+  <Doc path={`/mariners/${id}`} let:data let:ref>
     <div class="relative w-36">
       <Tag>
         <Ship
@@ -56,7 +56,7 @@
                 ref.update({ theme, shipType });
                 $voyage
                   .collection('crewmates')
-                  .doc(uid)
+                  .doc(id)
                   .update({ shipType, theme });
               } };
           }}
@@ -69,7 +69,7 @@
         class="name outline-none"
         value={data?.name}
         on:change={({ target: { value } }) => {
-          $voyage.collection('crewmates').doc(uid).update({ name: value });
+          $voyage.collection('crewmates').doc(id).update({ name: value });
           ref.update({ name: value });
         }} />
       <div class="providers">
@@ -89,7 +89,7 @@
             class="provider appearance-none text-sm"
             placeholder={data?.venmo}
             on:change={({ target: { value } }) => {
-              $voyage.collection('crewmates').doc(uid).update({ venmo: value });
+              $voyage.collection('crewmates').doc(id).update({ venmo: value });
               ref.update({ venmo: value });
             }} />
         </div>

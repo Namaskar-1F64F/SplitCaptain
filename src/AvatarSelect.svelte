@@ -2,7 +2,7 @@
   import { voyage, selected, undo } from "./store";
   import { Collection } from "sveltefire";
   import StaticProfile from "./profile/StaticProfile.svelte";
-  export let uid;
+  export let id;
   const handleRemove = (crewmate, ref) => {
     crewmate.ref.delete();
     $undo = {
@@ -32,7 +32,7 @@
       <div class="translate">
         <label>
           <StaticProfile
-            isRemovable={uid != crewmate.uid}
+            isRemovable={id != crewmate.id}
             {crewmate}
             selected={crewmate === $selected}
             on:remove={() => handleRemove(crewmate, ref)} />

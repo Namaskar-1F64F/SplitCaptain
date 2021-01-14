@@ -35,7 +35,7 @@
   const handleSelect = () => {
     if (id) {
       const remove =
-        $selected != null && crewmate && crewmate.includes($selected?.uid);
+        $selected != null && crewmate && crewmate.includes($selected?.id);
       dispatch("select", { remove });
     }
   };
@@ -155,7 +155,7 @@
           class={`transform origin-top scale-50 absolute ${possiblePlacements[i].join(' ')}`}>
           <!-- Since crew might be a string here (the UID), resolve if it is a string with the collection -->
           <StaticProfile
-            crewmate={typeof crew === 'string' ? data.find((d) => d.uid === crew) : crew} />
+            crewmate={typeof crew === 'string' ? data.find((d) => d.id === crew) : crew} />
         </div>
       {/each}
     </Collection>
