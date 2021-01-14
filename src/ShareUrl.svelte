@@ -1,5 +1,5 @@
 <script>
-  import { voyage, excursion } from "./store";
+  import { voyage } from "./store";
   import { slide } from "svelte/transition";
   import copy from "copy-text-to-clipboard";
   import { t } from "svelte-i18n";
@@ -13,11 +13,12 @@
   const [year, month] = new Date().toISOString().split("-");
 </script>
 
-{#if $voyage.id && $excursion.id}
+{#if $voyage.id}
   <div
     in:slide
     on:click={(event) => {
-      const url = `/#/voyages/${$voyage.id}/excursions/${$excursion.id}`;
+      
+      const url = `/#/voyages/${$voyage.id}`;
       if (navigator.share) {
         navigator.share({ title: `Join my voyage!`, url }).catch(console.error);
       } else {
