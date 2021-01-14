@@ -3,7 +3,7 @@
   import { db } from "../firebase";
   import { excursion, voyage } from "../store";
   export let params = {};
-  $voyage = db.collection("voyages").doc("n3jonjH3ldmsK7S4vANf");
+  $voyage = db.collection("voyages").doc(params.voyageId);
   $excursion = db.doc(
     `/voyages/${params.voyageId}/excursions/${params.excursionId}`
   );
