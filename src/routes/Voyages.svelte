@@ -2,7 +2,11 @@
   import Profile from "../profile/Profile.svelte";
   import { Collection, User } from "sveltefire";
   import { db } from "../firebase";
-  import {link} from 'svelte-spa-router'
+  import { link } from "svelte-spa-router";
+
+  export const addVoyage = () => {
+    db.collection("voyages").doc().set({ name: "YeeHaw Voyage" });
+  };
 </script>
 
 <User let:user={mariner}>
@@ -14,6 +18,8 @@
       <Profile id={mariner.id} />
     </div>
     <Collection path={db.collection("voyages")} let:data={voyages}>
+      <button on:click={addVoyage}>New Voyage</button>
+
       <ul>
         {#each voyages as voyage}
           <li>
