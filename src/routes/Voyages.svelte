@@ -1,8 +1,8 @@
 <script>
-  import ShareUrl from "../ShareUrl.svelte";
-  import AvatarSelect from "../AvatarSelect.svelte";
   import Profile from "../profile/Profile.svelte";
-  import { User } from "sveltefire";
+  import { Collection, User } from "sveltefire";
+  import { db } from "../firebase";
+  import {link} from 'svelte-spa-router'
 </script>
 
 <User let:user={mariner}>
@@ -13,9 +13,14 @@
     <div class="p-10 content-center w-full">
       <Profile uid={mariner.uid} />
     </div>
-    <span class="text-4xl">Invite Your Crew</span>
-    <ShareUrl />
-    <span class="text-4xl">Welcome Your Crew</span>
-    <AvatarSelect uid={mariner.uid} />
+    <Collection path={db.collection("voyages")} let:data={voyages}>
+      <ul>
+        {#each voyages as voyage}
+          <li>
+            <a href={`/voyages/${voyage.id}`} use:link>{voyage.id}</a>
+          </li>
+        {/each}
+      </ul>
+    </Collection>
   </div>
 </User>
