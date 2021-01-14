@@ -21,24 +21,6 @@ export { firebase };
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-import { voyage, excursion } from "./store";
-
-let params = (new URL(window.location)).searchParams;
-const excursionId = params.get("e");
-const voyageId = params.get("v");
-let voyageRef;
-if (excursionId) {
-  voyageRef = db.doc(`/voyages/${voyageId}`);
-} else {
-  // TODO unhard code this. This is set so that it always users this voyage ID
-  // It will be useful for testing, and we can consider the below ID our mexico voyage
-    voyageRef = db.collection("voyages").doc('n3jonjH3ldmsK7S4vANf');
-  // voyageRef = db.collection("voyages").doc();
-}
-voyage.set(voyageRef);
-
-
-const crewmateRef = voyageRef.collection("crewmates");
 auth.signInAnonymously().then(({ user: { id } }) => {
   db.doc(`mariners/${id}`)
     .get()
@@ -46,13 +28,5 @@ auth.signInAnonymously().then(({ user: { id } }) => {
       if (!snapshot.exists) {
         snapshot.ref.set({ name: getShipName() });
       }
-    })
-    .then(() => {
-      voyageRef.set({ date: new Date() }, { merge: true });
-      db.doc(`mariners/${id}`)
-        .get()
-        .then((mariner) => {
-          crewmateRef.doc(id).set({ ...mariner.data() });
-        });
     });
 });
