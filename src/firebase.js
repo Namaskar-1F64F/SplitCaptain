@@ -38,17 +38,6 @@ if (excursionId) {
 voyage.set(voyageRef);
 
 
-
-let excursionRef
-
-
-if (voyageId && excursionId) {
-  excursionRef = db.doc(`/voyages/${voyageId}/excursions/${excursionId}`);
-} else {
-  excursionRef = voyageRef.collection('excursions').doc();
-}
-excursion.set(excursionRef);
-
 const crewmateRef = voyageRef.collection("crewmates");
 auth.signInAnonymously().then(({ user: { id } }) => {
   db.doc(`mariners/${id}`)

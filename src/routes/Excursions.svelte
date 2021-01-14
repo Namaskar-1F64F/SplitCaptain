@@ -8,6 +8,10 @@
 
   export let params = {};
   $voyage = db.doc(`/voyages/${params.voyageId}`);
+
+  export const addExcursion = () => {
+     $voyage.collection('excursions').doc().set({name: 'test'});
+  }
 </script>
 
 <User let:user={mariner}>
@@ -17,6 +21,7 @@
     <span class="text-4xl">Welcome Your Crew</span>
     <AvatarSelect id={mariner.id} />
     <Collection path={$voyage.collection("excursions")} let:data={excursions}>
+        <button on:click={addExcursion}>New Excursion</button>
       <!-- TODO this only loops through documents that have properties. Documents that contain other collections
     are not showing up here. WHY? -->
       <ul>
