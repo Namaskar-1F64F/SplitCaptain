@@ -66,8 +66,8 @@
       <input
         autocorrect="off"
         autocomplete="off"
-        class="name outline-none text-gray-400"
-        value={data.name}
+        class="name outline-none"
+        value={data?.name}
         on:change={({ target: { value } }) => {
           $voyage.collection('crewmates').doc(uid).update({ name: value });
           ref.update({ name: value });

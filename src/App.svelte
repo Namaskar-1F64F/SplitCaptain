@@ -18,7 +18,9 @@
       src: url("/fonts/Chippewa-Falls-Regular.woff2") format("woff2"),
         url("/fonts/Chippewa-Falls-Regular.woff") format("woff");
     }
-    .body {
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
       background-color: #24aae1;
       font-family: "Chippewa Falls";
     }
@@ -42,10 +44,10 @@
         <span class="text-4xl">Welcome Your Crew</span>
         <AvatarSelect uid={mariner.uid} />
       </div>
-      <Undo />
-      <Announcement />
-      <Badge />
     </div>
+    <Undo />
+    <Announcement />
+    <Badge />
   </User>
 </FirebaseApp>
 
