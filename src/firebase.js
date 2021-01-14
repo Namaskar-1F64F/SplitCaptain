@@ -21,8 +21,8 @@ export { firebase };
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-auth.signInAnonymously().then(({ user: { id } }) => {
-  db.doc(`mariners/${id}`)
+auth.signInAnonymously().then(({ user: { uid } }) => {
+  db.doc(`mariners/${uid}`)
     .get()
     .then((snapshot) => {
       if (!snapshot.exists) {

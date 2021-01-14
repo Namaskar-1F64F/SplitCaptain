@@ -15,7 +15,7 @@
   >
     <span class="text-4xl">Name Your Ship</span>
     <div class="p-10 content-center w-full">
-      <Profile id={mariner.id} />
+      <Profile id={mariner.uid} />
     </div>
     <Collection path={db.collection("voyages")} let:data={voyages}>
       <button on:click={addVoyage}>New Voyage</button>

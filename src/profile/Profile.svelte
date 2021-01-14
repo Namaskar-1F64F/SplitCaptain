@@ -54,10 +54,10 @@
           on:click={() => {
             $announce = { component: ShipSelect, onSelect: ({ detail: { shipType, theme } }) => {
                 ref.update({ theme, shipType });
-                $voyage
-                  .collection('crewmates')
-                  .doc(id)
-                  .update({ shipType, theme });
+                // $voyage
+                //   .collection('crewmates')
+                //   .doc(id)
+                //   .update({ shipType, theme });
               } };
           }}
           theme={data.theme}
@@ -68,8 +68,9 @@
         autocomplete="off"
         class="name outline-none"
         value={data?.name}
+      
         on:change={({ target: { value } }) => {
-          $voyage.collection('crewmates').doc(id).update({ name: value });
+          // $voyage.collection('crewmates').doc(id).update({ name: value });
           ref.update({ name: value });
         }} />
       <div class="providers">
@@ -89,7 +90,7 @@
             class="provider appearance-none text-sm"
             placeholder={data?.venmo}
             on:change={({ target: { value } }) => {
-              $voyage.collection('crewmates').doc(id).update({ venmo: value });
+              // $voyage.collection('crewmates').doc(id).update({ venmo: value });
               ref.update({ venmo: value });
             }} />
         </div>
