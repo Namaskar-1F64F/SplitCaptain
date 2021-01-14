@@ -21,15 +21,34 @@ export { firebase };
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-import { voyage } from "./store";
-const queryId = window.location.search.split("i=")?.[1];
+import { voyage, excursion } from "./store";
+
+let params = (new URL(window.location)).searchParams;
+const excursionId = params.get("e");
+const voyageId = params.get("v");
 let voyageRef;
-if (queryId) {
-  voyageRef = db.doc(`/voyages/${queryId}`);
+if (excursionId) {
+  voyageRef = db.doc(`/voyages/${voyageId}`);
 } else {
-  voyageRef = db.collection("voyages").doc();
+  // TODO unhard code this. This is set so that it always users this voyage ID
+  // It will be useful for testing, and we can consider the below ID our mexico voyage
+    voyageRef = db.collection("voyages").doc('n3jonjH3ldmsK7S4vANf');
+  // voyageRef = db.collection("voyages").doc();
 }
 voyage.set(voyageRef);
+
+
+
+let excursionRef
+
+
+if (voyageId && excursionId) {
+  excursionRef = db.doc(`/voyages/${voyageId}/excursions/${excursionId}`);
+} else {
+  excursionRef = voyageRef.collection('excursions').doc();
+}
+excursion.set(excursionRef);
+
 const crewmateRef = voyageRef.collection("crewmates");
 auth.signInAnonymously().then(({ user: { uid } }) => {
   db.doc(`mariners/${uid}`)

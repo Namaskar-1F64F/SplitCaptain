@@ -1,5 +1,5 @@
 <script>
-  import { voyage } from "./store";
+  import { voyage, excursion } from "./store";
   import { slide } from "svelte/transition";
   import copy from "copy-text-to-clipboard";
   import { t } from "svelte-i18n";
@@ -19,11 +19,11 @@
   }
 </style>
 
-{#if $voyage.id}
+{#if $voyage.id && $excursion.id}
   <div
     in:slide
     on:click={(event) => {
-      const url = `/?i=${$voyage.id}`;
+      const url = `/?v=${$voyage.id}&e=${$excursion.id}`;
       if (navigator.share) {
         navigator.share({ title: `Join my voyage!`, url }).catch(console.error);
       } else {
