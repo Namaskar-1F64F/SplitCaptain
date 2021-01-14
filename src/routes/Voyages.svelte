@@ -11,7 +11,7 @@
   >
     <span class="text-4xl">Name Your Ship</span>
     <div class="p-10 content-center w-full">
-      <Profile uid={mariner.uid} />
+      <Profile id={mariner.id} />
     </div>
     <Collection path={db.collection("voyages")} let:data={voyages}>
       <ul>

@@ -15,7 +15,7 @@
     <span class="text-4xl">Invite Your Crew</span>
     <ShareUrl />
     <span class="text-4xl">Welcome Your Crew</span>
-    <AvatarSelect uid={mariner.uid} />
+    <AvatarSelect id={mariner.id} />
     <Collection path={$voyage.collection("excursions")} let:data={excursions}>
       <!-- TODO this only loops through documents that have properties. Documents that contain other collections
     are not showing up here. WHY? -->

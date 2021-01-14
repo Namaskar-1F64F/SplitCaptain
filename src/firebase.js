@@ -50,8 +50,8 @@ if (voyageId && excursionId) {
 excursion.set(excursionRef);
 
 const crewmateRef = voyageRef.collection("crewmates");
-auth.signInAnonymously().then(({ user: { uid } }) => {
-  db.doc(`mariners/${uid}`)
+auth.signInAnonymously().then(({ user: { id } }) => {
+  db.doc(`mariners/${id}`)
     .get()
     .then((snapshot) => {
       if (!snapshot.exists) {
@@ -60,10 +60,10 @@ auth.signInAnonymously().then(({ user: { uid } }) => {
     })
     .then(() => {
       voyageRef.set({ date: new Date() }, { merge: true });
-      db.doc(`mariners/${uid}`)
+      db.doc(`mariners/${id}`)
         .get()
         .then((mariner) => {
-          crewmateRef.doc(uid).set({ ...mariner.data(), uid });
+          crewmateRef.doc(id).set({ ...mariner.data() });
         });
     });
 });
