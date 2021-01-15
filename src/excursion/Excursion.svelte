@@ -3,18 +3,20 @@
   import Crewmate from "./Crewmate.svelte";
   import { Collection, Doc } from "sveltefire";
   import TextInput from "./TextInput.svelte";
-  const addToArray = (provisionsRef) => {
-    provisionsRef.add({});
+  const addToArray = (ref) => {
+    ref.add({});
   };
 
-  const deleteFromArray = (provisionRef) => {
-    provisionRef.delete();
+  const deleteFromArray = (ref) => {
+    ref.delete();
   };
 
-  const reduceProvisions  = (provisions) => provisions.reduce(
-    (a, b) => parseInt(a.price) + parseInt(b.price),
-    { price: 0 }
-  );
+  const reduceProvisions = (provisions) =>
+    provisions.reduce((a, b) => parseInt(a.price) + parseInt(b.price), {
+      price: 0,
+    });
+
+  const updateCrewmatePaid = (ref, checked) => ref.set({ checked });
 </script>
 
 <Collection path={$voyage.collection("crewmates")} let:data={crewmates}>
@@ -41,7 +43,7 @@
         >
           <Crewmate
             on:change={(value) =>
-              paidRef.set({ checked: value.target.checked })}
+              updateCrewmatePaid(paidRef, value.target.checked)}
             checked={paid.checked}
             {name}
           />
@@ -95,7 +97,6 @@
               value={description}
               ref={provisionsRef.doc(id)}
             />
-
             {#each crewmates as crewmate (crewmate)}
               <Doc
                 startWith={{ checked: false }}
@@ -104,9 +105,10 @@
                 let:ref={paidRef}
               >
                 <Crewmate
-                  ref={paidRef}
                   checked={paid.checked}
                   name={crewmate.name}
+                  on:change={(value) =>
+                    updateCrewmatePaid(paidRef, value.target.checked)}
                 />
               </Doc>
             {/each}
