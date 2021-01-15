@@ -1,17 +1,16 @@
 <script>
   import { excursion, voyage } from "../store";
   import Crewmate from "./Crewmate.svelte";
-  import { Collection } from "sveltefire";
+  import { Collection, Doc } from "sveltefire";
   import DescriptionInput from "./DescriptionInput.svelte";
-  const addToArray = (provisionRef) => {
-    provisionRef.add({});
+  const addToArray = (provisionsRef) => {
+    provisionsRef.add({});
   };
 
-  const deleteFromArray = (provisionRef, id) => {
+  const deleteFromArray = (provisionRef) => {
     provisionRef
-      .doc(id)
       .delete()
-      .then((r) => console.log(r));
+      
   };
 </script>
 
@@ -24,16 +23,31 @@
     <Collection
       path={$excursion.collection("provisions")}
       let:data={provisions}
-      let:ref={excursionRef}
+      let:ref={provisionsRef}
     >
       {`Total bill: ${provisions.reduce(
-        (a, b) => parseInt(a.price) + parseInt(b.price, 0)
+        (a, b) => (parseInt(a.price) + parseInt(b.price)), {price: 0}
       )}`}
-      <form on:submit|preventDefault={() => addToArray(excursionRef)}>
+        <Doc path={$excursion} let:data={excursion} let:ref={excursionRef}>
+          <DescriptionInput
+            title="Excursion Name"
+            field="name"
+            value={excursion.name}
+            ref={excursionRef}
+          />
         Who Paid ?
         {#each crewmates as { name, id } (id)}
-          <Crewmate {name} />
+          <Doc
+          startWith={{checked: false}}
+          path={excursionRef.collection('paid').doc(id)}
+          let:data={paid}
+          let:ref={paidRef}
+        >
+            <Crewmate ref={paidRef} checked={paid.checked} name={name} />
+          </Doc>
         {/each}
+      </Doc>
+
         <ul class="divide-y divide-gray-200">
           {#each provisions as { price, id, currency, description } (id)}
             <li class="px-4 py-4 sm:px-6">
@@ -51,7 +65,7 @@
                   <input
                     value={price || ""}
                     on:change={({ target: { value } }) => {
-                      excursionRef.doc(id).update({ price: value });
+                      provisionsRef.doc(id).update({ price: value });
                     }}
                     type="text"
                     name="price"
@@ -64,7 +78,7 @@
                     <select
                       value={currency}
                       on:blur={({ target: { value } }) => {
-                        excursionRef.doc(id).update({ currency: value });
+                        provisionsRef.doc(id).update({ currency: value });
                       }}
                       id={`currency-${id}`}
                       name="currency"
@@ -76,18 +90,26 @@
                 </div>
 
                 <DescriptionInput
-                  title="Description"
+                  title="Trip"
                   field="description"
                   value={description}
-                  ref={excursionRef.doc(id)}
+                  ref={provisionsRef.doc(id)}
                 />
 
                 {#each crewmates as crewmate}
-                  <Crewmate name={crewmate.name} />
+                <Doc
+                startWith={{checked: false}}
+                path={provisionsRef.doc(id).collection('paid').doc(crewmate.id)}
+                let:data={paid}
+                let:ref={paidRef}
+              >
+
+                  <Crewmate ref={paidRef} checked={paid.checked} name={crewmate.name} />
+                </Doc>
                 {/each}
                 <button
                   class=" bg-red-600"
-                  on:click={() => deleteFromArray(excursionRef, id)}>
+                  on:click={() => deleteFromArray(provisionsRef.doc(id))}>
                   Delete Provision
                 </button>
               </div>
@@ -95,8 +117,7 @@
           {/each}
         </ul>
         <button type="submit" />
-      </form>
-      <button class=" bg-green-600" on:click={() => addToArray(excursionRef)}>
+      <button class=" bg-green-600" on:click={() => addToArray(provisionsRef)}>
         Add provision
       </button>
     </Collection>
