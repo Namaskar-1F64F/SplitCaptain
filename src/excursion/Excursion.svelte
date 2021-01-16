@@ -34,21 +34,21 @@
         ref={excursionRef}
       />
       Who Paid ?
-      {#each crewmates as { name, id } (id)}
-        <Doc
-          startWith={{ checked: false }}
-          path={excursionRef.collection("paid").doc(id)}
-          let:data={paid}
-          let:ref={paidRef}
-        >
+
+      <Collection
+        path={excursionRef.collection("paid")}
+        let:data={paid}
+        let:ref={paidRef}
+      >
+        {#each crewmates as { name, id } (id)}
           <Crewmate
             on:change={(value) =>
-              updateCrewmatePaid(paidRef, value.target.checked)}
-            checked={paid.checked}
+              updateCrewmatePaid(paidRef.doc(id), value.target.checked)}
+            checked={paid.find((p) => p.id === id)?.checked}
             {name}
           />
-        </Doc>
-      {/each}
+        {/each}
+      </Collection>
     </Doc>
 
     <ul class="divide-y divide-gray-200">
@@ -97,21 +97,23 @@
               value={description}
               ref={provisionsRef.doc(id)}
             />
-            {#each crewmates as crewmate (crewmate)}
-              <Doc
-                startWith={{ checked: false }}
-                path={provisionsRef.doc(id).collection("paid").doc(crewmate.id)}
-                let:data={paid}
-                let:ref={paidRef}
-              >
+            <Collection
+              path={provisionsRef.doc(id).collection("paid")}
+              let:data={paidData}
+              let:ref={paidRef}
+            >
+              {#each crewmates as crewmate (crewmate)}
                 <Crewmate
-                  checked={paid.checked}
+                  checked={paidData.find((p) => p.id === crewmate.id)?.checked}
                   name={crewmate.name}
                   on:change={(value) =>
-                    updateCrewmatePaid(paidRef, value.target.checked)}
+                    updateCrewmatePaid(
+                      paidRef.doc(crewmate.id),
+                      value.target.checked
+                    )}
                 />
-              </Doc>
-            {/each}
+              {/each}
+            </Collection>
             <button
               class=" bg-red-600"
               on:click={() => deleteFromArray(provisionsRef.doc(id))}>
