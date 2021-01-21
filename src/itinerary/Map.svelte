@@ -29,7 +29,7 @@
     // enable panning and zooming of the svg
     panzoom(map.node, {
       bounds: true,
-      boundsPadding: 0.1
+      boundsPadding: 0.1,
     });
 
     // create islands, currently hardcoded but hopefully eventually will be dynamic @SvenWritesCode

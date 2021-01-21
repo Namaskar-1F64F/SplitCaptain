@@ -19,14 +19,14 @@ export function getPossibleCoordinates(paths, random) {
 }
 
 export function createStart({ x, y }, onClick, rc) {
-  let marker = rc.rectangle(x-20, y-20, 40, 40, {
+  let marker = rc.rectangle(x - 20, y - 20, 40, 40, {
     stroke: "red",
     fill: "red",
     fillStyle: "solid",
     style: "cursor: pointer",
   });
   marker.style = "cursor: pointer";
-  marker.addEventListener("click", onClick);
+  marker.addEventListener("touchstart", onClick);
   return marker;
 }
 
@@ -38,6 +38,10 @@ export function createPort({ x, y }, onClick, rc) {
     style: "cursor: pointer",
   });
   marker.style = "cursor: pointer";
+  marker.addEventListener("touchend", (event) => {
+    onClick();
+    event.stopPropagation;
+  });
   marker.addEventListener("click", onClick);
   return marker;
 }
