@@ -2,6 +2,7 @@ import { init, getLocaleFromNavigator } from "svelte-i18n";
 import App from "./App.svelte";
 import "./Tailwind.svelte";
 import "./i18n";
+import './utils';
 
 const fallbackLocale = "en-US";
 const navigatorLocale = getLocaleFromNavigator();

@@ -22,9 +22,12 @@
     "start": "sirv public"
   },
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.0.16",
     "@tailwindcss/forms": "^0.2.1",
     "copy-text-to-clipboard": "^2.2.0",
     "firebase": "^8.2.1",
+    "roughjs": "^4.3.1",
+    "seedrandom": "^3.0.5",
     "sirv-cli": "^1.0.10",
     "svelte-spa-router": "^3.1.0",
     "sveltefire": "^0.1.5"
@@ -37,6 +40,7 @@
     "autoprefixer": "^10.0.2",
     "cssnano": "^4.1.10",
     "nollup": "^0.13.13",
+    "panzoom": "^9.4.1",
     "postcss": "^8.1.1",
     "postcss-color-mod-function": "^3.0.3",
     "postcss-import": "^12.0.1",
