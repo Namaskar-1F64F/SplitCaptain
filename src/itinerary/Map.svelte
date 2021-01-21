@@ -26,13 +26,10 @@
       options: { seed },
     });
 
-    // enable panning and zooming of the svg, also prevent the library from stealing our touch events
+    // enable panning and zooming of the svg
     panzoom(map.node, {
       bounds: true,
-      boundsPadding: 0.1,
-      onTouch: (e) => {
-        return false;
-      },
+      boundsPadding: 0.1
     });
 
     // create islands, currently hardcoded but hopefully eventually will be dynamic @SvenWritesCode
