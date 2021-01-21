@@ -5,97 +5,89 @@
   import { onMount } from "svelte";
   import rough from "roughjs/bundled/rough.esm.js";
   import { SVG } from "@svgdotjs/svg.js";
+  import seedrandom from "seedrandom";
+  import {
+    createIsland,
+    createPath,
+    createPort,
+    createStart,
+    getPossibleCoordinates,
+  } from "./map.js";
   export let excursions;
-  const seed = { seed: 1337 };
 
-  export let svg;
-  let r = (d, x) => (!x ? 1e10 : (0.125 * d * d) / x + x / 2);
-  let s = 40;
+  const seed = $voyage.id.hashCode();
+  const random = seedrandom(seed);
 
   onMount(() => {
-    const rc = rough.svg(svg);
-    let lastMarker = 0;
-    let island = rc.circle(250, 250, 250, {
-      ...seed,
-      roughness: 10,
-      fill: "tan",
-      fillStyle: "solid",
-      stroke: "none",
+    // This is our main container, using svg.js. To get the node, use
+    const map = SVG().addTo("#map").size(1000, 1000);
+    const rc = rough.svg(map.node, {
+      // keep a consistent seed from the voyage ID
+      options: { seed },
     });
 
-    svg.appendChild(island);
-    var draw = SVG().addTo(svg);
-
-    function getPortMapCoordinates() {
-      const coordiates = [];
-      excursions.forEach(({ id }) => {
-        const path = island.childNodes[0];
-        const length = path.getTotalLength();
-        const step = 100;
-        if (lastMarker + 100 < length) {
-          lastMarker += step;
-          coordiates.push(path.getPointAtLength(lastMarker));
-        }
-      });
-      return coordiates;
-    }
-
-    function drawPort({ x, y }, id) {
-      let marker = rc.circle(x, y, 20, {
-        ...seed,
-        stroke: "red",
-        fill: "red",
-        fillStyle: "solid",
-        style: "cursor: pointer",
-      });
-      marker.style = "cursor: pointer";
-      marker.addEventListener("click", () =>
-        push(`/voyages/${$voyage.id}/excursions/${id}`)
-      );
-      svg.appendChild(marker);
-      draw
-        .text(id)
-        .center(x, y + 20)
-        .back();
-    }
-
-    function drawPath(x1, y1, x2, y2) {
-      let dx = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-      const path = ["M", x1, y1, "A", r(dx, s), r(dx, s), 0, 0, 1, x2, y2].join(
-        " "
-      );
-      svg.appendChild(
-        rc.path(path, {
-          ...seed,
-          strokeLineDash: [10, 10],
-          strokeWidth: 5,
-        })
-      );
-    }
-
-    panzoom(svg, {
+    // enable panning and zooming of the svg, also prevent the library from stealing our touch events
+    panzoom(map.node, {
       bounds: true,
       boundsPadding: 0.1,
+      onTouch: (e) => {
+        return false;
+      },
     });
-    let coordinates = getPortMapCoordinates();
-    coordinates.forEach(({ x: x2, y: y2 }, i, arr) => {
-      if (i === 0) return;
-      let { x: x1, y: y1 } = arr[i - 1];
-      drawPath(x1, y1, x2, y2);
+
+    // create islands, currently hardcoded but hopefully eventually will be dynamic @SvenWritesCode
+    let islands = [
+      createIsland(250, 250, 250, rc),
+      createIsland(600, 500, 200, rc),
+      createIsland(550, 200, 80, rc),
+    ];
+
+    islands.forEach((island) => {
+      map.add(island);
     });
-    excursions.forEach(({ id }, i) => {
-      if (coordinates[i]) {
-        drawPort(coordinates[i], id);
+
+    // for all the islands, figure out where we can put the excursions on the coastline, randomly
+    let coordinates = getPossibleCoordinates(islands, random);
+    excursions.forEach(({ name, id }, i) => {
+      const previousIsland = coordinates[i - 1];
+      const currentIsland = coordinates[i];
+      if (currentIsland) {
+        if (previousIsland && currentIsland) {
+          const { x: x1, y: y1 } = previousIsland;
+          const { x: x2, y: y2 } = currentIsland;
+          map.add(createPath(x1, y1, x2, y2, rc));
+        }
+        // This is stupid, will refactor when start changes to star
+        let marker;
+        if (i === 0) {
+          marker = createStart(
+            currentIsland,
+            () => push(`/voyages/${$voyage.id}/excursions/${id}`),
+            rc
+          );
+        } else {
+          marker = createPort(
+            currentIsland,
+            () => push(`/voyages/${$voyage.id}/excursions/${id}`),
+            rc
+          );
+        }
+        map.add(marker);
+        map
+          .text(name)
+          .center(currentIsland.x, currentIsland.y + 20)
+          .front();
       }
     });
   });
 </script>
 
-<svg id="svg" bind:this={svg} />
+<div id="map" />
 
 <style>
-  svg {
+  #map {
     height: 600px;
     width: 100vw;
+    outline: none;
   }
 </style>
