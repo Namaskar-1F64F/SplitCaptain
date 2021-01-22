@@ -17,7 +17,6 @@
   <div
     in:slide
     on:click={(event) => {
-      
       const url = `/#/voyages/${$voyage.id}`;
       if (navigator.share) {
         navigator.share({ title: `Join my voyage!`, url }).catch(console.error);

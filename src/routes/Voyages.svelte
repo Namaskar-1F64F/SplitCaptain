@@ -6,8 +6,10 @@
   const addVoyage = () => {
     db.collection("voyages").doc().set({ name: voyageName });
   };
-  let voyageName = "Voyage Name";
+  let voyageName = "";
 </script>
+
+<a use:link href={`/`}>Back to harbor</a>
 
 <User let:user={mariner}>
   <div
@@ -23,7 +25,7 @@
       </ul>
 
       <div class="flex">
-        <input bind:value={voyageName} />
+        <input placeholder="Voyage Name" bind:value={voyageName} />
         <button on:click={addVoyage}>Create Voyage</button>
       </div>
     </Collection>

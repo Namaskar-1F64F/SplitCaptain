@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { getShipName } from "./ship/ships";
 
 if (!firebase.apps.length)
   firebase.initializeApp({
@@ -18,4 +17,3 @@ export { firebase };
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
-

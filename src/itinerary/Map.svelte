@@ -56,18 +56,11 @@
         }
         // This is stupid, will refactor when start changes to star
         let marker;
+        let callback = () => push(`/voyages/${$voyage.id}/excursions/${id}`);
         if (i === 0) {
-          marker = createStart(
-            currentIsland,
-            () => push(`/voyages/${$voyage.id}/excursions/${id}`),
-            rc
-          );
+          marker = createStart(currentIsland, callback, rc);
         } else {
-          marker = createPort(
-            currentIsland,
-            () => push(`/voyages/${$voyage.id}/excursions/${id}`),
-            rc
-          );
+          marker = createPort(currentIsland, callback, rc);
         }
         map.add(marker);
         map

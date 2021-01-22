@@ -1,19 +1,29 @@
 <script>
   import { push } from "svelte-spa-router";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import {
     phoneSignIn,
     recaptchaRender,
     recaptchaVerifierInvisible,
     verifyCode,
+    onlyCountries,
   } from "../phone-auth.js";
   import { announce } from "../store/index.js";
   import { db } from "../firebase.js";
   import { getShipName } from "../ship/ships.js";
-  let phoneNumber, confirmationResult, confirmationInput, form;
+  import intlTelInput from "intl-tel-input";
+  import "intl-tel-input/build/js/utils.js";
+  import "intl-tel-input/build/css/intlTelInput.css";
+
+  let phoneNumber,
+    confirmationResult,
+    confirmationInput,
+    form,
+    dropdownContainer;
   const addAnnouncement = (text) => {
     $announce = { text };
   };
+
   const handleVerifyInput = ({ target: { value } }) => {
     if (value.length < 6) return false;
     verifyCode(value.substring(0, 6), confirmationResult)
@@ -33,13 +43,47 @@
         addAnnouncement(err);
       });
   };
+
   const handleReset = () => {
-    // this is admittedly worse than resetting (gcaptcha.reset()), but it doesn't WORK
+    // this is admittedly worse than resetting (gcaptcha.reset()), but it doesn't WORK since the element is destroyed i think
     window.location.reload();
   };
+
+  let iti;
   onMount(() => {
+    iti = intlTelInput(phoneNumber, {
+      dropdownContainer,
+      onlyCountries,
+
+      preferredCountries: [
+        "us",
+        "hk",
+        "tw",
+        "in",
+        "id",
+        "br",
+        "ng",
+        "jp",
+        "ru",
+      ],
+    });
+    // This enables the recaptcha which is REQUIRED for firebase SMS
     recaptchaVerifierInvisible("submit", () => {
-      phoneSignIn(phoneNumber.value)
+      // This callback is triggered on the form submit? Not sure how it works, but kinda inconvenient
+      if (!iti.isValidNumber()) {
+        // need to reset this otherwise it'll not let us click again
+        grecaptcha.reset();
+        return addAnnouncement(
+          [
+            "Invalid number",
+            "Invalid country code",
+            "Too short",
+            "Too long",
+            "Invalid number",
+          ][iti.getValidationError()]
+        );
+      }
+      phoneSignIn(iti.getNumber())
         .then((response) => {
           confirmationResult = response;
         })
@@ -47,9 +91,14 @@
           addAnnouncement(error);
           handleReset();
         });
+      // don't submit the form
       return false;
     });
     recaptchaRender();
+  });
+
+  onDestroy(() => {
+    iti.destroy();
   });
 </script>
 
@@ -63,16 +112,15 @@
         >set sail with your number</label
       >
       <div class="mt-1 text-white text-xl">
-        <form bind:this={form}>
+        <form class="flex justify-center" bind:this={form}>
           <input
-            type="text"
+            type="tel"
             name="phone_number"
             id="phone_number"
             bind:this={phoneNumber}
-            class="text-2xl focus:shadow-none text-center focus:ring-opacity-0 focus:ring-transparent focus:ring-offset-transparent outline-none focus:border-transparent focus:outline-none focus:border-none bg-transparent text-gray-100 block w-full border-transparent rounded-md"
-            placeholder="+1 (330) 907-5333"
-          />
-          <button id="submit">📞 text</button>
+            class="text-2xl focus:shadow-none focus:ring-opacity-0 focus:ring-transparent focus:ring-offset-transparent outline-none focus:border-transparent focus:outline-none focus:border-none bg-transparent text-gray-100 block w-full border-transparent rounded-md"
+          /><br />
+          <button class="text-2xl" id="submit">📲 text</button>
         </form>
         <i class="text-gray-300 text-xs text-center"
           >legal requirements vary, but as a best practice and to set
@@ -106,6 +154,5 @@
 <style>
   ::placeholder {
     color: lightgray;
-    text-align: center;
   }
 </style>

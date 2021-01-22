@@ -16,11 +16,10 @@ module.exports = {
     postcssPresetEnv({
       stage: 0,
       features: {
-        'focus-within-pseudo-class': false
+        "focus-within-pseudo-class": false,
       },
       autoprefixer: {
         grid: false,
-        
       },
     }),
     postcssColorMod(),

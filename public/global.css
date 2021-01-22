@@ -7,3 +7,24 @@
 .grecaptcha-badge {
   visibility: hidden;
 }
+/* flag things for flag input */
+.iti__flag {
+  background-image: url("/flags.png") !important;
+}
+.iti__country-name {
+  padding-left: 16px !important;
+}
+.iti__country-list {
+  background-color: #404040 !important;
+  border-radius: 8px !important;
+  border-color: #888;
+}
+.iti__selected-flag {
+  outline: none !important;
+}
+.iti__arrow {
+  border-top-color: white !important;
+}
+.iti__flag-container {
+  margin-top: 4px !important;
+}
