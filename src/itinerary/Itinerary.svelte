@@ -3,12 +3,15 @@
   import Map from "./Map.svelte";
   import { Collection } from "sveltefire";
 
-  export const addExcursion = () => {
-    $voyage.collection("excursions").doc().set({ name: "test" });
+  let excursionName = "Excursion Name";
+  const addExcursion = () => {
+    $voyage.collection("excursions").doc().set({ name: excursionName });
   };
 </script>
+
+<input bind:value={excursionName} />
+<button on:click={addExcursion}>Create Excursion</button>
 
 <Collection path={$voyage.collection("excursions")} let:data={excursions}>
   <Map {excursions} />
 </Collection>
-<button on:click={addExcursion}>New Excursion</button>

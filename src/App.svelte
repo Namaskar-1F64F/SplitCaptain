@@ -4,7 +4,6 @@
 
   import Undo from "./store/Undo.svelte";
   import Announcement from "./store/Announcement.svelte";
-  import Badge from "./Badge.svelte";
   import Router from "svelte-spa-router";
   import routes from "./routes";
 </script>
@@ -31,7 +30,6 @@
   </div>
   <Undo />
   <Announcement />
-  <Badge />
 </FirebaseApp>
 
 <style>

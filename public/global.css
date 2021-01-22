@@ -1,4 +1,9 @@
+/* add placeholder to contenteditable with placeholder attribute */
 [contenteditable][placeholder]:empty::before {
-    content: attr(placeholder);
-    color: 'blue';
-  }
+  content: attr(placeholder);
+  color: "blue";
+}
+/* remove stupid recaptcha thing */
+.grecaptcha-badge {
+  visibility: hidden;
+}
