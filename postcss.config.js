@@ -30,6 +30,7 @@ module.exports = {
     production &&
       purgeCss({
         content: ["./**/*.html", "./**/*.svelte"],
+        safelist: [/.*iti.*/],
         defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
       }),
   ],

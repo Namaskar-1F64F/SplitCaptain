@@ -5,8 +5,6 @@ import json from "@rollup/plugin-json";
 import postcss from "rollup-plugin-postcss";
 import sveltePreprocess from "svelte-preprocess";
 import { terser } from "rollup-plugin-terser";
-import livereload from "rollup-plugin-livereload";
-import hmr from "rollup-plugin-hot";
 
 // Set this to true to pass the --single flag to sirv (this serves your
 // index.html for any unmatched route, which is a requirement for SPA
