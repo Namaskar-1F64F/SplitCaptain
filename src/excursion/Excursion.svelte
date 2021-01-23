@@ -1,8 +1,8 @@
 <script>
-  import { excursion, voyage } from "../store";
   import Crewmate from "./Crewmate.svelte";
   import { Collection, Doc } from "sveltefire";
   import TextInput from "./TextInput.svelte";
+  export let voyageId, excursionId;
   const addToArray = (ref) => {
     ref.add({});
   };
@@ -19,14 +19,14 @@
   const updateCrewmatePaid = (ref, checked) => ref.set({ checked });
 </script>
 
-<Collection path={$voyage.collection("crewmates")} let:data={crewmates}>
+<Collection path={`voyages/${voyageId}/crewmates`} let:data={crewmates}>
   <Collection
-    path={$excursion.collection("provisions")}
+    path={`voyages/${voyageId}/excursions/${excursionId}/provisions`}
     let:data={provisions}
     let:ref={provisionsRef}
   >
     {`Total bill: ${reduceProvisions(provisions)}`}
-    <Doc path={$excursion} let:data={excursion} let:ref={excursionRef}>
+    <Doc path={`voyages/${voyageId}/excursions/${excursionId}`} let:data={excursion} let:ref={excursionRef}>
       <TextInput
         title="Excursion Name"
         field="name"

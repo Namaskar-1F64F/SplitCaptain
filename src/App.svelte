@@ -26,7 +26,7 @@
 <svelte:body />
 <FirebaseApp {firebase}>
   <div class="body">
-    <Router {routes} />
+    <Router {routes} restoreScrollState={true} />
   </div>
   <Undo />
   <Announcement />

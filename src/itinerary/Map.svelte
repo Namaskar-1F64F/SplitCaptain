@@ -1,5 +1,4 @@
 <script>
-  import { voyage } from "./../store/index.js";
   import panzoom from "panzoom";
   import { push } from "svelte-spa-router";
   import { onMount } from "svelte";
@@ -13,9 +12,8 @@
     createStart,
     getPossibleCoordinates,
   } from "./map.js";
-  export let excursions;
-
-  const seed = $voyage.id.hashCode();
+  export let excursions, voyageId;
+  const seed = voyageId.hashCode();
   const random = seedrandom(seed);
 
   onMount(() => {
@@ -56,7 +54,7 @@
         }
         // This is stupid, will refactor when start changes to star
         let marker;
-        let callback = () => push(`/voyages/${$voyage.id}/excursions/${id}`);
+        let callback = () => push(`/voyages/${voyageId}/excursions/${id}`);
         if (i === 0) {
           marker = createStart(currentIsland, callback, rc);
         } else {
