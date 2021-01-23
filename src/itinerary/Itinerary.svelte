@@ -1,5 +1,5 @@
 <script>
-  import { firebase } from "firebase/app";
+  import firebase from "firebase/app";
   import Map from "./Map.svelte";
   import { Collection } from "sveltefire";
   import { push, link } from "svelte-spa-router";
