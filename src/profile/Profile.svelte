@@ -1,6 +1,6 @@
 <script>
   import ShipSelect from "../ship/ShipSelect.svelte";
-  import { voyage, announce } from "../store";
+  import { announce } from "../store";
   import { Doc } from "sveltefire";
   import Tag from "./Tag.svelte";
   import Ship from "../ship/Ship.svelte";
@@ -9,6 +9,65 @@
   export let id;
   let focused;
 </script>
+
+<div class="top-0 right-0 flex">
+  <Doc path={`/mariners/${id}`} let:data let:ref>
+    <div class="relative w-36">
+      <Tag>
+        <Ship
+          on:click={() => {
+            $announce = {
+              component: ShipSelect,
+              onSelect: ({ detail: { shipType, theme } }) => {
+                ref.update({ theme, shipType });
+              },
+            };
+          }}
+          theme={data.theme}
+          shipType={data.shipType}
+        />
+      </Tag>
+      <input
+        autocorrect="off"
+        autocomplete="off"
+        class="name outline-none"
+        value={data?.name}
+        on:change={({ target: { value } }) => {
+          ref.update({ name: value });
+        }}
+      />
+      <div class="providers">
+        <div>
+          <span class="absolute venmo -left-4">@</span>
+          <input
+            on:focus={() => {
+              focused = true;
+            }}
+            on:blur={({ target: { value } }) => {
+              if (!value) {
+                focused = false;
+              }
+            }}
+            autocorrect="off"
+            autocomplete="off"
+            class="provider appearance-none text-sm"
+            placeholder={data?.venmo}
+            on:change={({ target: { value } }) => {
+              // $voyage.collection('crewmates').doc(id).update({ venmo: value });
+              ref.update({ venmo: value });
+            }}
+          />
+        </div>
+        <div
+          class:focused={focused || data?.venmo}
+          class="logo transition-all w-full"
+        >
+          <Venmo />
+        </div>
+      </div>
+    </div>
+  </Doc>
+</div>
 
 <style>
   .name {
@@ -45,61 +104,3 @@
     transform: translateY(18px) translateX(4px);
   }
 </style>
-
-<div class="top-0 right-0 flex">
-  <Doc path={`/mariners/${id}`} let:data let:ref>
-    <div class="relative w-36">
-      <Tag>
-        <Ship
-          on:click={() => {
-            $announce = { component: ShipSelect, onSelect: ({ detail: { shipType, theme } }) => {
-                ref.update({ theme, shipType });
-                // $voyage
-                //   .collection('crewmates')
-                //   .doc(id)
-                //   .update({ shipType, theme });
-              } };
-          }}
-          theme={data.theme}
-          shipType={data.shipType} />
-      </Tag>
-      <input
-        autocorrect="off"
-        autocomplete="off"
-        class="name outline-none"
-        value={data?.name}
-      
-        on:change={({ target: { value } }) => {
-          // $voyage.collection('crewmates').doc(id).update({ name: value });
-          ref.update({ name: value });
-        }} />
-      <div class="providers">
-        <div>
-          <span class="absolute venmo -left-4">@</span>
-          <input
-            on:focus={() => {
-              focused = true;
-            }}
-            on:blur={({ target: { value } }) => {
-              if (!value) {
-                focused = false;
-              }
-            }}
-            autocorrect="off"
-            autocomplete="off"
-            class="provider appearance-none text-sm"
-            placeholder={data?.venmo}
-            on:change={({ target: { value } }) => {
-              // $voyage.collection('crewmates').doc(id).update({ venmo: value });
-              ref.update({ venmo: value });
-            }} />
-        </div>
-        <div
-          class:focused={focused || data?.venmo}
-          class="logo transition-all w-full">
-          <Venmo />
-        </div>
-      </div>
-    </div>
-  </Doc>
-</div>

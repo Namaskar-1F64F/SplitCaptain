@@ -1,9 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import "firebase/performance";
-import "firebase/analytics";
-import { getShipName } from "./ship/ships";
 
 if (!firebase.apps.length)
   firebase.initializeApp({
@@ -20,13 +17,3 @@ export { firebase };
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
-
-auth.signInAnonymously().then(({ user: { uid } }) => {
-  db.doc(`mariners/${uid}`)
-    .get()
-    .then((snapshot) => {
-      if (!snapshot.exists) {
-        snapshot.ref.set({ name: getShipName() });
-      }
-    });
-});

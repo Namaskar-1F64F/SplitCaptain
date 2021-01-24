@@ -26,6 +26,7 @@
     "@tailwindcss/forms": "^0.2.1",
     "copy-text-to-clipboard": "^2.2.0",
     "firebase": "^8.2.1",
+    "intl-tel-input": "^17.0.8",
     "roughjs": "^4.3.1",
     "seedrandom": "^3.0.5",
     "sirv-cli": "^1.0.10",
@@ -37,11 +38,11 @@
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
-    "autoprefixer": "^10.0.2",
+    "autoprefixer": "^9",
     "cssnano": "^4.1.10",
     "nollup": "^0.13.13",
     "panzoom": "^9.4.1",
-    "postcss": "^8.1.1",
+    "postcss": "^7",
     "postcss-color-mod-function": "^3.0.3",
     "postcss-import": "^12.0.1",
     "postcss-preset-env": "^6.7.0",
@@ -56,6 +57,6 @@
     "svelte": "^3.0.0",
     "svelte-i18n": "^3.1.0",
     "svelte-preprocess": "^4.3.2",
-    "tailwindcss": "^2.0.2"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

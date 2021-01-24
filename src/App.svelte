@@ -4,7 +4,6 @@
 
   import Undo from "./store/Undo.svelte";
   import Announcement from "./store/Announcement.svelte";
-  import Badge from "./Badge.svelte";
   import Router from "svelte-spa-router";
   import routes from "./routes";
 </script>
@@ -27,11 +26,10 @@
 <svelte:body />
 <FirebaseApp {firebase}>
   <div class="body">
-    <Router {routes} />
+    <Router {routes} restoreScrollState={true} />
   </div>
   <Undo />
   <Announcement />
-  <Badge />
 </FirebaseApp>
 
 <style>

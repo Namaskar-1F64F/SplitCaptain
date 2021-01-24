@@ -16,11 +16,10 @@ module.exports = {
     postcssPresetEnv({
       stage: 0,
       features: {
-        'focus-within-pseudo-class': false
+        "focus-within-pseudo-class": false,
       },
       autoprefixer: {
         grid: false,
-        
       },
     }),
     postcssColorMod(),
@@ -31,6 +30,7 @@ module.exports = {
     production &&
       purgeCss({
         content: ["./**/*.html", "./**/*.svelte"],
+        safelist: [/.*iti.*/],
         defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
       }),
   ],

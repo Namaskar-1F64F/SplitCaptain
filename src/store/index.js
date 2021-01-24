@@ -9,7 +9,3 @@ export const announce = writable(null);
 
 // ok dude remove this at some point no way this is right
 export const currentShipType = writable(null);
-
-
-  
-  

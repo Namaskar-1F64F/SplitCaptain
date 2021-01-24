@@ -5,9 +5,6 @@ import json from "@rollup/plugin-json";
 import postcss from "rollup-plugin-postcss";
 import sveltePreprocess from "svelte-preprocess";
 import { terser } from "rollup-plugin-terser";
-import livereload from "rollup-plugin-livereload";
-import hmr from "rollup-plugin-hot";
-
 
 // Set this to true to pass the --single flag to sirv (this serves your
 // index.html for any unmatched route, which is a requirement for SPA
@@ -17,19 +14,19 @@ import hmr from "rollup-plugin-hot";
 // have to add the --history-api-fallback yourself in your package.json
 // scripts (see: https://github.com/PepsRyuu/nollup/#nollup-options)
 //
-const spa = false
+const spa = false;
 
 // NOTE The NOLLUP env variable is picked by various HMR plugins to switch
 // in compat mode. You should not change its name (and set the env variable
 // yourself if you launch nollup with custom comands).
-const isNollup = !!process.env.NOLLUP
-const isWatch = !!process.env.ROLLUP_WATCH
-const isLiveReload = !!process.env.LIVERELOAD
+const isNollup = !!process.env.NOLLUP;
+const isWatch = !!process.env.ROLLUP_WATCH;
+const isLiveReload = !!process.env.LIVERELOAD;
 
-const isDev = isWatch || isLiveReload
-const isProduction = !isDev
+const isDev = isWatch || isLiveReload;
+const isProduction = !isDev;
 
-const isHot = isWatch && !isLiveReload
+const isHot = isWatch && !isLiveReload;
 
 function serve() {
   let server;
@@ -69,7 +66,17 @@ export default {
   plugins: [
     // Use PostCSS configuration and extract Svelte components style
     postcss({
-      extract: true,
+      extensions: [".css"],
+      extract: false,
+      minimize: true,
+      use: [
+        [
+          "sass",
+          {
+            includePaths: ["./node_modules"],
+          },
+        ],
+      ],
     }),
 
     svelte({
@@ -79,8 +86,8 @@ export default {
       // a separate file - better for performance
       // NOTE when hot option is enabled, a blank file will be written to
       // avoid CSS rules conflicting with HMR injected ones
-      css: css => {
-        css.write(isNollup ? 'build/bundle.css' : 'bundle.css')
+      css: (css) => {
+        css.write(isNollup ? "build/bundle.css" : "bundle.css");
       },
       hot: isHot && {
         // Optimistic will try to recover from runtime

@@ -1,14 +1,25 @@
 <script>
-  import { voyage } from "./../store/index.js";
+  import firebase from "firebase/app";
   import Map from "./Map.svelte";
   import { Collection } from "sveltefire";
+  import { push, link } from "svelte-spa-router";
 
-  export const addExcursion = () => {
-    $voyage.collection("excursions").doc().set({ name: "test" });
+  export let voyageId;
+  let excursionName = "";
+  // Create a new excursion and push the boat off
+  const addExcursion = () => {
+    const newDoc = firebase.collection(`voyages/${voyageId}/excursions`).doc();
+    newDoc.set({ name: excursionName }).then(() => {
+      push(`/voyages/${voyageId}/excursions/${newDoc.id}`);
+    });
   };
 </script>
 
-<Collection path={$voyage.collection("excursions")} let:data={excursions}>
-  <Map {excursions} />
+<a use:link href={`/voyages/${voyageId}`}>Back to bridge</a>
+<div />
+<input bind:value={excursionName} placeholder="Excursion Name" />
+<button on:click={addExcursion}>Create Excursion</button>
+
+<Collection path={`/voyages/${voyageId}/excursions`} let:data={excursions}>
+  <Map {excursions} {voyageId} />
 </Collection>
-<button on:click={addExcursion}>New Excursion</button>

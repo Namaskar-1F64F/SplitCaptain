@@ -1,9 +1,8 @@
 <script>
-  import { voyage } from "./store";
   import { slide } from "svelte/transition";
   import copy from "copy-text-to-clipboard";
   import { t } from "svelte-i18n";
-
+  export let voyageId;
   let open = false;
   const handleMouseEnter = () => {
     open = true;
@@ -13,12 +12,11 @@
   const [year, month] = new Date().toISOString().split("-");
 </script>
 
-{#if $voyage.id}
+{#if voyageId}
   <div
     in:slide
     on:click={(event) => {
-      
-      const url = `/#/voyages/${$voyage.id}`;
+      const url = `/#/voyages/${voyageId}`;
       if (navigator.share) {
         navigator.share({ title: `Join my voyage!`, url }).catch(console.error);
       } else {
@@ -178,7 +176,7 @@
       <rect x="136.081" y="345.976" width="15.642" height="15.642" />
       <rect x="160.065" y="345.976" width="15.642" height="15.642" />
       <text x="40.147" y="298.976" font-size="20">
-        {$voyage.id || "YJOl3AAiZ7ctsFwuGsVg"}
+        {voyageId || "YJOl3AAiZ7ctsFwuGsVg"}
       </text>
       <rect x="408.244" y="228.367" width="63.609" height="15.642" />
       <rect
