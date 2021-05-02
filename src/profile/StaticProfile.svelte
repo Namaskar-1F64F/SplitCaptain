@@ -1,13 +1,19 @@
 <script>
   import Ship from "../ship/Ship.svelte";
   import StaticTag from "./StaticTag.svelte";
+  import { Doc } from "sveltefire";
   export let crewmate;
   export let selected = false;
-  const { name, theme, shipType } = crewmate;
+  const { id, name } = crewmate;
 </script>
 
 <div class="w-32" class:selected>
   <StaticTag {selected} text={name}>
-    <Ship {theme} {shipType} />
+    <Doc path={`/mariners/${id}`} let:data let:ref>
+      <g slot="fallback">
+        <Ship />
+      </g>
+      <Ship theme={data.theme} shipType={data.shipType} />
+    </Doc>
   </StaticTag>
 </div>
