@@ -1,4 +1,3 @@
-
 ![Welcome Aboard!](https://user-images.githubusercontent.com/7458951/100930230-c8a6d100-34b6-11eb-90a0-a0bdc3e637e1.png)
 # Split Captain
 
